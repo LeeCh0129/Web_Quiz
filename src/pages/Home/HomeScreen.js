@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import Board from "../components/Board";
-import Member from "../components/Member";
+import Board from "../../components/Board";
+import Member from "../../components/Member";
+import ChattingScreen from "../../components/ChatBot/ChattingScreen";
 import { useNavigate } from "react-router-dom";
-
-function Home() {
+import "./Styles.css";
+function HomeScreen() {
     const navigate = useNavigate();
   const [boardText, setBoardText] = useState("팀 세얼간이");
+    const [showChatbot, setShowChatbot] = useState(false);
 
   const showText = (introduce, name, source) => {
     setBoardText(introduce);
@@ -19,6 +21,14 @@ function Home() {
     const handleClick = () => {
         navigate("/quiz");
     };
+    const handleChatbot = () => {
+        setShowChatbot(true);
+    };
+
+    const closeChatbot = () => {
+        setShowChatbot(false);
+    };
+
 
   return (
     <div>
@@ -69,14 +79,21 @@ function Home() {
         </table>
       </div>
       <div id="thirdDiv">
-        <div>
+        <div id = "gamebuttonContainer">
             <button id="quizButton" onClick={handleClick}>
                 <text>game start</text>
             </button>
         </div>
       </div>
+        <div id="chatbotButton">
+            <button id="chatbotButton" onClick={handleChatbot}>
+            <img src="/chatbot.png" width="60px" height="60px" />
+            </button>
+        </div>
+        <ChattingScreen show={showChatbot} handleClose={closeChatbot} />
+
     </div>
   );
 }
 
-export default Home;
+export default HomeScreen;

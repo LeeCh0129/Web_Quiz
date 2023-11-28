@@ -1,0 +1,37 @@
+#gamebuttonContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+#top {
+    width: 127.5px;
+    height: 81px;
+    margin: 0 auto;
+    margin-top: 10px;
+    background-color: antiquewhite;
+    background-image: url("/public/koreaFlag.jpeg");
+    background-size: cover;
+    border: 5px solid rgb(108, 66, 48);
+    border-radius: 5px;
+}
+
+#thirdDiv {
+    width: 100%;
+    height: 170px;
+}
+
+#thirdDiv div {
+    width: 600px;
+    height: 100%;
+    margin: 0 auto;
+    background-image: url("/public/table.png");
+    background-size: cover;
+}
+#chatbotButton{
+    margin-top: 10px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+}
