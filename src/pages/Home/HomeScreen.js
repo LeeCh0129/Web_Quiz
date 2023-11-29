@@ -5,9 +5,9 @@ import ChattingScreen from "../../components/ChatBot/ChattingScreen";
 import { useNavigate } from "react-router-dom";
 import "./Styles.css";
 function HomeScreen() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [boardText, setBoardText] = useState("팀 세얼간이");
-    const [showChatbot, setShowChatbot] = useState(false);
+  const [showChatbot, setShowChatbot] = useState(false);
 
   const showText = (introduce, name, source) => {
     setBoardText(introduce);
@@ -18,17 +18,16 @@ function HomeScreen() {
     setBoardText("팀 세얼간이");
     document.getElementById(name).style.backgroundImage = `url('${source}')`;
   };
-    const handleClick = () => {
-        navigate("/quiz");
-    };
-    const handleChatbot = () => {
-        setShowChatbot(true);
-    };
+  const handleClick = () => {
+    navigate("/quiz");
+  };
+  const handleChatbot = () => {
+    setShowChatbot(true);
+  };
 
-    const closeChatbot = () => {
-        setShowChatbot(false);
-    };
-
+  const closeChatbot = () => {
+    setShowChatbot(false);
+  };
 
   return (
     <div>
@@ -66,7 +65,7 @@ function HomeScreen() {
                 name="younghoon"
                 onMouseOver={() =>
                   showText(
-                      "ICT공학부 201904027 김영훈",
+                    "ICT공학부 201904027 김영훈",
                     "younghoon",
                     "/younghoons.png"
                   )
@@ -79,19 +78,18 @@ function HomeScreen() {
         </table>
       </div>
       <div id="thirdDiv">
-        <div id = "gamebuttonContainer">
-            <button id="quizButton" onClick={handleClick}>
-                <text>game start</text>
-            </button>
+        <div id="gamebuttonContainer">
+          <button id="quizButton" onClick={handleClick}>
+            <text>game start</text>
+          </button>
         </div>
       </div>
-        <div id="chatbotButton">
-            <button id="chatbotButton" onClick={handleChatbot}>
-            <img src="/chatbot.png" width="60px" height="60px" />
-            </button>
-        </div>
-        <ChattingScreen show={showChatbot} handleClose={closeChatbot} />
-
+      <div id="chatbotButton">
+        <button id="chatbotButton" onClick={handleChatbot}>
+          <img src="/chatbot.png" width="60px" height="60px" />
+        </button>
+      </div>
+      <ChattingScreen show={showChatbot} handleClose={closeChatbot} />
     </div>
   );
 }

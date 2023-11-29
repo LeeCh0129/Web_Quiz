@@ -4,6 +4,7 @@
 
 #secondTable {
   width: 500px;
+  height: 150px;
   margin: 0 auto;
   border-collapse: collapse;
 }
@@ -11,6 +12,7 @@
 #secondTable tr {
   display: flex;
   justify-content: center;
+  height: 99%;
 }
 
 #secondTable td {
@@ -18,6 +20,7 @@
   align-items: center;
   justify-content: center;
   flex-basis: 33.33%; /* 테이블 내 각 셀이 전체 너비의 1/3을 차지하도록 설정 */
+  height: 100%;
 }
 
 #secondTable span {
@@ -28,7 +31,7 @@
 #minuk,
 #chanho,
 #younghoon {
-    height: 200px;
+  height: 200px;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
