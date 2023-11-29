@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const API_KEY = "737fc88d439055fbc420c49a2612c2dd";
 const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=ko-KR`;
@@ -40,23 +41,24 @@ const Ranking = () => {
 const QuizScreen = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
-  const [questions, setQuestions] = useState([]);
+  const [quizQuestions, setQuizQuestions] = useState([]);
 
   useEffect(() => {
-    fetchQuestions();
+    fetchQuizQuestions();
   }, []);
 
-  const fetchQuestions = () => {
-    fetch(API_URL)
-      .then((response) => response.json())
-      .then((data) => {
-        let movies = data.results;
-        let options = shuffleArray(movies.map((movie) => movie.title)).slice(
+  const fetchQuizQuestions = () => {
+    axios
+      .get(API_URL)
+      .then((response) => {
+        const data = response.data;
+        const movies = data.results;
+        const options = shuffleArray(movies.map((movie) => movie.title)).slice(
           0,
           3
         );
 
-        let fetchedQuestions = movies.map((movie, index) => {
+        const fetchedQuestions = movies.map((movie, index) => {
           return {
             id: index,
             question: `이 영화의 제목은 무엇일까요?`,
@@ -66,7 +68,10 @@ const QuizScreen = () => {
           };
         });
 
-        setQuestions(shuffleArray(fetchedQuestions));
+        setQuizQuestions(shuffleArray(fetchedQuestions));
+      })
+      .catch((error) => {
+        console.error("API 호출 중 오류 발생:", error);
       });
   };
 
@@ -78,21 +83,21 @@ const QuizScreen = () => {
     return array;
   };
 
-  const handleAnswer = (option) => {
-    if (option === questions[currentQuestionIndex].answer) {
+  const handleAnswer = (selectedOption) => {
+    if (selectedOption === quizQuestions[currentQuestionIndex].answer) {
       setScore(score + 1);
-      if (currentQuestionIndex < questions.length - 1) {
+      if (currentQuestionIndex < quizQuestions.length - 1) {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
       } else {
         alert(
-          `퀴즈 완료! 당신의 점수는 ${score + 1}/${questions.length}입니다.`
+          `퀴즈 완료! 당신의 점수는 ${score + 1}/${quizQuestions.length}입니다.`
         );
         saveScore(score + 1);
         resetGame();
       }
     } else {
       alert(
-        `틀렸습니다. 당신은 총${score}문제의 정답을 맞추셨습니다. 대단하시네요!`
+        `틀렸습니다. 당신은 총 ${score}문제의 정답을 맞추셨습니다. 대단하시네요!`
       );
       saveScore(score);
       resetGame();
@@ -102,22 +107,22 @@ const QuizScreen = () => {
   const resetGame = () => {
     setScore(0);
     setCurrentQuestionIndex(0);
-    fetchQuestions();
+    fetchQuizQuestions();
   };
 
   return (
     <div>
       <h1>영화 퀴즈</h1>
       <p>현재 점수: {score}</p>
-      {questions.length > 0 && (
+      {quizQuestions.length > 0 && (
         <div id={"quizContainer"}>
           <img
             style={{ height: "300px" }}
-            src={`${IMAGE_BASE_URL}${questions[currentQuestionIndex].posterPath}`}
+            src={`${IMAGE_BASE_URL}${quizQuestions[currentQuestionIndex].posterPath}`}
             alt="영화 포스터"
           />
-          <p>{questions[currentQuestionIndex].question}</p>
-          {questions[currentQuestionIndex].options.map((option, index) => (
+          <p>{quizQuestions[currentQuestionIndex].question}</p>
+          {quizQuestions[currentQuestionIndex].options.map((option, index) => (
             <button key={index} onClick={() => handleAnswer(option)}>
               {option}
             </button>
