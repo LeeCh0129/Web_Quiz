@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./QuizScreen.css";
 
 const API_KEY = "737fc88d439055fbc420c49a2612c2dd";
 const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=ko-KR`;
@@ -30,7 +31,7 @@ const Ranking = () => {
       <ul>
         {rankedScores.map((scoreData) => (
           <li key={scoreData.rank}>
-            {scoreData.rank}위: {scoreData.score} 점
+            {scoreData.rank}위 : {scoreData.score} 점
           </li>
         ))}
       </ul>
@@ -82,7 +83,6 @@ const QuizScreen = () => {
     }
     return array;
   };
-
   const handleAnswer = (selectedOption) => {
     if (selectedOption === quizQuestions[currentQuestionIndex].answer) {
       setScore(score + 1);
@@ -111,26 +111,38 @@ const QuizScreen = () => {
   };
 
   return (
-    <div>
-      <h1>영화 퀴즈</h1>
-      <p>현재 점수: {score}</p>
+    <div id="wrapper">
+      <div id="header">
+        <h1 id="title">영화 퀴즈</h1>
+        <p id="score">점수 : {score}</p>
+      </div>
       {quizQuestions.length > 0 && (
-        <div id={"quizContainer"}>
-          <img
-            style={{ height: "300px" }}
-            src={`${IMAGE_BASE_URL}${quizQuestions[currentQuestionIndex].posterPath}`}
-            alt="영화 포스터"
-          />
-          <p>{quizQuestions[currentQuestionIndex].question}</p>
-          {quizQuestions[currentQuestionIndex].options.map((option, index) => (
-            <button key={index} onClick={() => handleAnswer(option)}>
-              {option}
-            </button>
-          ))}
+        <div id="quizContainer">
+          <div id="imgContainer">
+            <img
+              id="img"
+              src={`${IMAGE_BASE_URL}${quizQuestions[currentQuestionIndex].posterPath}`}
+              alt="영화 포스터"
+            />
+          </div>
+          <div id="answerContainer">
+            <span>{quizQuestions[currentQuestionIndex].question}</span>
+            {quizQuestions[currentQuestionIndex].options.map(
+              (option, index) => (
+                <div key={index} className="option">
+                  <button onClick={() => handleAnswer(option)}>{option}</button>
+                </div>
+              )
+            )}
+          </div>
+          <div id="rankingContainer">
+            <Ranking />
+          </div>
         </div>
       )}
-      <button onClick={resetGame}>다시 게임하기</button>
-      <Ranking />
+      <button id="restartButton" onClick={resetGame}>
+        퀴즈 재시작
+      </button>
     </div>
   );
 };

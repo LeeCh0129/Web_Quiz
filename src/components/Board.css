@@ -37,3 +37,7 @@
   background-size: cover;
   font-family: cursive;
 }
+
+#rightBoard:hover {
+  cursor: pointer;
+}

@@ -1,0 +1,60 @@
+#wrapper {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 20px;
+}
+
+#quizContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  height: 270px;
+}
+
+#imgContainer {
+  display: inline-block;
+  height: 99%;
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: gray;
+  border-style: solid;
+  flex: 2;
+}
+
+#img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+#answerContainer {
+  display: inline-block;
+  padding: 50px;
+  flex: 5;
+}
+
+#rankingContainer {
+  flex: 3;
+}
+
+.option {
+  margin-top: 30px;
+}
+
+#restartButton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px;
+  background-color: #11833f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+#restartButton:hover {
+  background-color: #0f6e35;
+}

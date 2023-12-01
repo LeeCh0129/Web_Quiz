@@ -1,7 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Board.css";
 
 function Board({ boardText }) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/quiz");
+  };
+
   return (
     <div id="firstDiv">
       <table id="firstTable">
@@ -18,19 +25,15 @@ function Board({ boardText }) {
             <td id="middleBoard">
               <span id="boardText">{boardText}</span>
             </td>
-            <td id="rightBoard">
-              <a
-                href="https://web.kangnam.ac.kr/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="/kangnam.jpeg"
-                  width="120px"
-                  height="120px"
-                  alt="강남대 로고"
-                />
-              </a>
+            <td>
+              <img
+                id="rightBoard"
+                onClick={handleClick}
+                src="/movie.jpeg"
+                width="120px"
+                height="120px"
+                alt="영화 퀴즈"
+              />
             </td>
           </tr>
         </tbody>

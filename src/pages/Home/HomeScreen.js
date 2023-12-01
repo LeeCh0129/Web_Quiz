@@ -78,11 +78,7 @@ function HomeScreen() {
         </table>
       </div>
       <div id="thirdDiv">
-        <div id="gamebuttonContainer">
-          <button id="quizButton" onClick={handleClick}>
-            <text>game start</text>
-          </button>
-        </div>
+        <div></div>
       </div>
       <div id="chatbotButton">
         <button id="chatbotButton" onClick={handleChatbot}>
