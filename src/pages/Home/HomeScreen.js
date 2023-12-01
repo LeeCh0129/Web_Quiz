@@ -18,9 +18,6 @@ function HomeScreen() {
     setBoardText("팀 세얼간이");
     document.getElementById(name).style.backgroundImage = `url('${source}')`;
   };
-  const handleClick = () => {
-    navigate("/quiz");
-  };
   const handleChatbot = () => {
     setShowChatbot(true);
   };

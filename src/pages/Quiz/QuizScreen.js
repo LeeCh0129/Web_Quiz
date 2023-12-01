@@ -17,7 +17,9 @@ const getScores = () => {
 };
 
 const Ranking = () => {
-  const scores = getScores().sort((a, b) => b - a);
+  const scores = getScores()
+    .sort((a, b) => b - a)
+    .slice(0, 10);
 
   // 순위 부여
   const rankedScores = scores.map((score, index) => {
@@ -27,7 +29,7 @@ const Ranking = () => {
 
   return (
     <div>
-      <h2>랭킹</h2>
+      <h3>랭킹</h3>
       <ul>
         {rankedScores.map((scoreData) => (
           <li key={scoreData.rank}>
@@ -130,7 +132,9 @@ const QuizScreen = () => {
             {quizQuestions[currentQuestionIndex].options.map(
               (option, index) => (
                 <div key={index} className="option">
-                  <button onClick={() => handleAnswer(option)}>{option}</button>
+                  <button onClick={() => handleAnswer(option)}>
+                    {index + 1}. {option}
+                  </button>
                 </div>
               )
             )}

@@ -36,6 +36,7 @@
 
 #rankingContainer {
   flex: 3;
+  height: 100%;
 }
 
 .option {
