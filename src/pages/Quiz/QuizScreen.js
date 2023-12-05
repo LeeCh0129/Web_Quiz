@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./QuizScreen.css";
+import ChattingScreen from "../../components/ChatBot/ChattingScreen";
 
 const API_KEY = "737fc88d439055fbc420c49a2612c2dd";
 const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=ko-KR`;
@@ -45,6 +47,7 @@ const QuizScreen = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [quizQuestions, setQuizQuestions] = useState([]);
+  const [showChatbot, setShowChatbot] = useState(false);
 
   useEffect(() => {
     fetchQuizQuestions();
@@ -112,6 +115,14 @@ const QuizScreen = () => {
     fetchQuizQuestions();
   };
 
+  const handleChattingScreen = () => {
+    setShowChatbot(true);
+  };
+
+  const closeChatbot = () => {
+    setShowChatbot(false);
+  };
+
   return (
     <div id="wrapper">
       <div id="header">
@@ -147,6 +158,14 @@ const QuizScreen = () => {
       <button id="restartButton" onClick={resetGame}>
         퀴즈 재시작
       </button>
+      <button id="floatingButton" onClick={handleChattingScreen}>
+        Chat Bot
+      </button>
+      <div>
+        {showChatbot && (
+          <ChattingScreen show={showChatbot} handleClose={closeChatbot} />
+        )}
+      </div>
     </div>
   );
 };

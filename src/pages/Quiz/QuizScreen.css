@@ -44,6 +44,8 @@
 }
 
 #restartButton {
+  width: 75px;
+  height: 35px;
   position: fixed;
   top: 20px;
   right: 20px;
@@ -57,5 +59,24 @@
 }
 
 #restartButton:hover {
+  background-color: #0f6e35;
+}
+
+#floatingButton {
+  width: 75px;
+  height: 35px;
+  position: fixed;
+  top: 20px;
+  right: 100px;
+  padding: 10px;
+  background-color: #11833f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+#floatingButton:hover {
   background-color: #0f6e35;
 }
