@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh; /* 화면 높이의 100%를 사용하도록 설정 */
+  background-color: lightgray;
 }
 
 .button-container {
@@ -12,8 +13,13 @@
   margin-top: 20px;
 }
 
-button {
-  padding: 10px 20px;
-  font-size: 16px;
+.typeButton {
+  width: 200px;
+  height: 200px;
+  font-size: 13px;
   cursor: pointer;
+  border-radius: 10px;
+  border-color: darkgray;
+  border-width: 1px;
+  border-style: solid;
 }

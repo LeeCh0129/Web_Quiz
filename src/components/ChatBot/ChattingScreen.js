@@ -7,7 +7,7 @@ const ChattingScreen = ({ show, handleClose }) => {
   const [chatHistory, setChatHistory] = useState([
     {
       message:
-        "안녕하세요! 영화에 대해 궁금한 것이 있으시면 언제든 물어보세요. 영화 전문가 세얼간이가 도와드리겠습니다.",
+        "Chat Bot : 안녕하세요! 영화에 대해 궁금한 것이 있으시면 언제든 물어보세요. 영화 전문가 세얼간이가 도와드리겠습니다.",
       sender: "ChatGpt",
     },
   ]);
@@ -80,15 +80,32 @@ const ChattingScreen = ({ show, handleClose }) => {
   };
 
   const addMessageToChatHistory = (message, sender) => {
-    setChatHistory((chatHistory) => [...chatHistory, { message, sender }]);
+    const formattedMessage = `${
+      sender === "User" ? "User : " : "Chat Bot : "
+    }${message}`;
+    const backgroundColor = sender === "User" ? "white" : "slategrey";
+    const fontColor = sender === "User" ? "black" : "white";
+    setChatHistory((chatHistory) => [
+      ...chatHistory,
+      { message: formattedMessage, sender, backgroundColor, fontColor },
+    ]);
   };
 
   return (
     <div className="chatting-modal">
       <div ref={modalRef} className="chatting-modal-content">
+        <strong>Chat Bot</strong>
         <div className="chat-box">
           {chatHistory.map((msg, index) => (
-            <div key={index} className={`message ${msg.sender}`}>
+            <div
+              id="msgBox"
+              key={index}
+              className={`message ${msg.sender}`}
+              style={{
+                backgroundColor: msg.backgroundColor,
+                color: msg.fontColor,
+              }}
+            >
               {msg.message}
             </div>
           ))}
@@ -101,7 +118,7 @@ const ChattingScreen = ({ show, handleClose }) => {
               onChange={handleInputChange}
               placeholder="궁금하신 점을 물어보세요!"
             />
-            <button type="submit">보내기</button>
+            <button type="submit">send</button>
           </form>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "./QuizScreen.css";
 import ChattingScreen from "../../components/ChatBot/ChattingScreen";
 
@@ -13,7 +13,10 @@ const saveScore = (newScore) => {
   scores.push(newScore);
   localStorage.setItem("scores", JSON.stringify(scores));
 };
-
+const shortenOverview = (overview, maxLength = 100) => {
+  if (overview.length <= maxLength) return overview;
+  return `${overview.substring(0, maxLength)}....`;
+};
 const getScores = () => {
   return JSON.parse(localStorage.getItem("scores")) || [];
 };
@@ -30,7 +33,7 @@ const Ranking = () => {
   });
 
   return (
-    <div>
+    <div id="rankingContent">
       <h3>랭킹</h3>
       <ul>
         {rankedScores.map((scoreData) => (
@@ -51,6 +54,7 @@ const QuizScreen = () => {
 
   const location = useLocation();
   const data = { ...location.state };
+  const typeId = data.quizType;
 
   useEffect(() => {
     fetchQuizQuestions();
@@ -62,20 +66,55 @@ const QuizScreen = () => {
       .then((response) => {
         const data = response.data;
         const movies = data.results;
-        const options = shuffleArray(movies.map((movie) => movie.title)).slice(
-          0,
-          3
+        // overview가 있는 영화만 필터링
+        const moviesWithOverview = movies.filter(
+          (movie) => movie.overview && movie.overview.trim()
         );
+        let fetchedQuestions = [];
 
-        const fetchedQuestions = movies.map((movie, index) => {
-          return {
-            id: index,
-            question: `이 영화의 제목은 무엇일까요?`,
-            answer: movie.title,
-            posterPath: movie.poster_path,
-            options: shuffleArray([movie.title, ...options]),
-          };
-        });
+        if (typeId === "releaseDate") {
+          fetchedQuestions = movies.map((movie, index) => {
+            const options = shuffleArray(movies.map((m) => m.release_date))
+              .filter((opt) => opt !== movie.release_date) // 현재 영화의 개봉일 제외
+              .slice(0, 3);
+            options.push(movie.release_date); // 정답 추가ase_date); // 정답 추가
+
+            return {
+              id: index,
+              question: (
+                <span>
+                  영화 <strong>"{movie.title}"</strong>의 개봉일은 언제인가요?
+                </span>
+              ),
+              answer: movie.release_date,
+              posterPath: movie.poster_path,
+              options: shuffleArray(options),
+            };
+          });
+        } else if (typeId === "overview") {
+          fetchedQuestions = moviesWithOverview.map((movie, index) => {
+            const correctAnswer = shortenOverview(movie.overview);
+            const wrongOptions = shuffleArray(
+              moviesWithOverview.map((m) => shortenOverview(m.overview))
+            )
+              .filter((opt) => opt !== correctAnswer)
+              .slice(0, 3);
+            wrongOptions.push(correctAnswer);
+
+            return {
+              id: index,
+              question: (
+                <span>
+                  영화 <strong>"{movie.title}"</strong>의 줄거리와 일치하는
+                  것은?
+                </span>
+              ),
+              answer: correctAnswer,
+              posterPath: movie.poster_path,
+              options: shuffleArray(wrongOptions),
+            };
+          });
+        }
 
         setQuizQuestions(shuffleArray(fetchedQuestions));
       })
@@ -83,7 +122,6 @@ const QuizScreen = () => {
         console.error("API 호출 중 오류 발생:", error);
       });
   };
-
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -111,7 +149,9 @@ const QuizScreen = () => {
       resetGame();
     }
   };
-
+  useEffect(() => {
+    fetchQuizQuestions();
+  }, []);
   const resetGame = () => {
     setScore(0);
     setCurrentQuestionIndex(0);
@@ -126,11 +166,15 @@ const QuizScreen = () => {
     setShowChatbot(false);
   };
 
+  const quizType = typeId === "releaseDate" ? "개봉일" : "줄거리";
+
   return (
     <div id="wrapper">
       <div id="header">
-        <h1 id="title">영화 퀴즈 {data.id}</h1>
-        <p id="score">점수 : {score}</p>
+        <h1 id="title">영화 {quizType} 퀴즈</h1>
+        <p id="score">
+          점수 : <strong>{score}</strong>
+        </p>
       </div>
       {quizQuestions.length > 0 && (
         <div id="quizContainer">
@@ -146,7 +190,7 @@ const QuizScreen = () => {
             {quizQuestions[currentQuestionIndex].options.map(
               (option, index) => (
                 <div key={index} className="option">
-                  <button onClick={() => handleAnswer(option)}>
+                  <button id="answerBtn" onClick={() => handleAnswer(option)}>
                     {index + 1}. {option}
                   </button>
                 </div>
