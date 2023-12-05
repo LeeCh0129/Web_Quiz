@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./QuizScreen.css";
 import ChattingScreen from "../../components/ChatBot/ChattingScreen";
 
@@ -48,6 +48,9 @@ const QuizScreen = () => {
   const [score, setScore] = useState(0);
   const [quizQuestions, setQuizQuestions] = useState([]);
   const [showChatbot, setShowChatbot] = useState(false);
+
+  const location = useLocation();
+  const data = { ...location.state };
 
   useEffect(() => {
     fetchQuizQuestions();
@@ -126,7 +129,7 @@ const QuizScreen = () => {
   return (
     <div id="wrapper">
       <div id="header">
-        <h1 id="title">영화 퀴즈</h1>
+        <h1 id="title">영화 퀴즈 {data.id}</h1>
         <p id="score">점수 : {score}</p>
       </div>
       {quizQuestions.length > 0 && (

@@ -41,3 +41,7 @@
 #rightBoard:hover {
   cursor: pointer;
 }
+
+#leftBoard:hover {
+  cursor: pointer;
+}

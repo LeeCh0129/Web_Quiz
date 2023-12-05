@@ -6,7 +6,7 @@ function Board({ boardText }) {
   const navigate = useNavigate();
 
   const handleQuizClick = () => {
-    window.open("/type", "_blank");
+    navigate("/type");
   };
 
   const handleSurveyClick = () => {
