@@ -18,13 +18,6 @@ function HomeScreen() {
     setBoardText("팀 세얼간이");
     document.getElementById(name).style.backgroundImage = `url('${source}')`;
   };
-  const handleChatbot = () => {
-    setShowChatbot(true);
-  };
-
-  const closeChatbot = () => {
-    setShowChatbot(false);
-  };
 
   return (
     <div>
@@ -77,12 +70,6 @@ function HomeScreen() {
       <div id="thirdDiv">
         <div></div>
       </div>
-      <div id="chatbotButton">
-        <button id="chatbotButton" onClick={handleChatbot}>
-          <img src="/chatbot.png" width="60px" height="60px" />
-        </button>
-      </div>
-      <ChattingScreen show={showChatbot} handleClose={closeChatbot} />
     </div>
   );
 }

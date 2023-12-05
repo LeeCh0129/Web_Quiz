@@ -3,10 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "./Board.css";
 
 function Board({ boardText }) {
-  const navigate = useNavigate();
-
   const handleClick = () => {
-    navigate("/quiz");
+    window.open("/type", "_blank");
   };
 
   return (
