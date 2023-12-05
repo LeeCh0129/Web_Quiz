@@ -5,8 +5,12 @@ import "./Board.css";
 function Board({ boardText }) {
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleQuizClick = () => {
     navigate("/quiz");
+  };
+
+  const handleSurveyClick = () => {
+    navigate("/survey");
   };
 
   return (
@@ -14,8 +18,10 @@ function Board({ boardText }) {
       <table id="firstTable">
         <tbody>
           <tr>
-            <td id="leftBoard">
+            <td>
               <img
+                id="leftBoard"
+                onClick={handleSurveyClick}
                 src="/19team.png"
                 width="120px"
                 height="120px"
@@ -28,7 +34,7 @@ function Board({ boardText }) {
             <td>
               <img
                 id="rightBoard"
-                onClick={handleClick}
+                onClick={handleQuizClick}
                 src="/movie.jpeg"
                 width="120px"
                 height="120px"
