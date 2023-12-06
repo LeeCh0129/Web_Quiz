@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./QuizScreen.css";
 import ChattingScreen from "../../components/ChatBot/ChattingScreen";
 
@@ -52,6 +52,7 @@ const QuizScreen = () => {
   const [quizQuestions, setQuizQuestions] = useState([]);
   const [showChatbot, setShowChatbot] = useState(false);
 
+  const navigate = useNavigate();
   const location = useLocation();
   const data = { ...location.state };
   const typeId = data.quizType;
@@ -166,6 +167,10 @@ const QuizScreen = () => {
     setShowChatbot(false);
   };
 
+  const handleSurveyClick = () => {
+    navigate("/survey");
+  };
+
   const quizType = typeId === "releaseDate" ? "개봉일" : "줄거리";
 
   return (
@@ -205,8 +210,11 @@ const QuizScreen = () => {
       <button id="restartButton" onClick={resetGame}>
         퀴즈 재시작
       </button>
-      <button id="floatingButton" onClick={handleChattingScreen}>
+      <button id="chatBotButton" onClick={handleChattingScreen}>
         Chat Bot
+      </button>
+      <button id="surveyButton" onClick={handleSurveyClick}>
+        설문조사
       </button>
       <div>
         {showChatbot && (

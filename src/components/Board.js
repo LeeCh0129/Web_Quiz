@@ -9,10 +9,6 @@ function Board({ boardText }) {
     navigate("/type");
   };
 
-  const handleSurveyClick = () => {
-    navigate("/survey");
-  };
-
   return (
     <div id="firstDiv">
       <table id="firstTable">
@@ -21,7 +17,6 @@ function Board({ boardText }) {
             <td>
               <img
                 id="leftBoard"
-                onClick={handleSurveyClick}
                 src="/19team.png"
                 width="120px"
                 height="120px"

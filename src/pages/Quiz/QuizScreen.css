@@ -84,7 +84,7 @@
   background-color: gray;
 }
 
-#floatingButton {
+#chatBotButton {
   width: 75px;
   height: 35px;
   position: fixed;
@@ -98,6 +98,24 @@
   font-size: 10px;
 }
 
-#floatingButton:hover {
+#chatBotButton:hover {
+  background-color: gray;
+}
+
+#surveyButton {
+  width: 75px;
+  height: 35px;
+  position: fixed;
+  top: 20px;
+  right: 180px;
+  background-color: darkgray;
+  color: white;
+  border: 1px gray solid;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+#surveyButton:hover {
   background-color: gray;
 }
