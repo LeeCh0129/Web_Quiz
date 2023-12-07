@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./SurveyScreen.css";
+import { useNavigate } from "react-router-dom";
 
 const API_KEY = "737fc88d439055fbc420c49a2612c2dd";
 const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=ko-KR`;
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-const genreIdToName = {
+export const genreIdToName = {
   12: "모험",
   14: "판타지",
   16: "애니메이션",
@@ -27,6 +29,7 @@ const genreIdToName = {
 const SurveyScreen = () => {
   const [movies, setMovies] = useState([]);
   const [genrePreferences, setGenrePreferences] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -62,6 +65,7 @@ const SurveyScreen = () => {
   const submitPreferences = () => {
     localStorage.setItem("genrePreferences", JSON.stringify(genrePreferences));
     alert("영화장르 선호도가 저장되었습니다!");
+    navigate("/results");
   };
 
   return (
@@ -71,12 +75,12 @@ const SurveyScreen = () => {
         const imageUrl = movie ? `${IMAGE_BASE_URL}${movie.poster_path}` : "";
 
         return (
-          <div key={genreId} style={{ marginBottom: "20px" }}>
+          <div key={genreId} className="genre-container">
             {movie && (
-              <img src={imageUrl} alt={movie.title} width="100" height="150" />
+              <img src={imageUrl} alt={movie.title} className="movie-image" />
             )}
             <div>
-              <label>{`장르 ${
+              <label className="preference-label">{`장르 ${
                 genreIdToName[genreId] || "기타"
               }의 선호도: `}</label>
               <input
@@ -89,7 +93,7 @@ const SurveyScreen = () => {
                   handlePreferenceChange(genreId, e.target.value)
                 }
               />
-              <span style={{ marginLeft: "10px" }}>
+              <span className="preference-value">
                 {genrePreferences[genreId].toFixed(1)}
               </span>
             </div>
