@@ -1,12 +1,37 @@
 .genre-container {
-  margin-bottom: 20px;
+  padding: 10px;
+  background-color: whitesmoke;
+}
+
+#gerneBox {
+  width: 200px;
+  text-align: center;
+  border: 1px solid lightgray;
+  border-radius: 15px;
+  padding: 10px;
+  background-color: white;
 }
 
 .movie-image {
   width: 100px;
   height: 150px;
+  border-radius: 5px;
 }
 
 .preference-label {
   margin-left: 10px;
+}
+
+#save {
+  width: 75px;
+  height: 35px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: darkgray;
+  color: white;
+  border: 1px gray solid;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 10px;
 }

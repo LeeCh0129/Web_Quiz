@@ -119,3 +119,8 @@
 #surveyButton:hover {
   background-color: gray;
 }
+
+#resultContainer {
+  width: 90%;
+  height: 200px;
+}

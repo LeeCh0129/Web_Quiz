@@ -15,7 +15,7 @@ const GenrePreferenceChart = ({ preferences, genreIdToName }) => {
   }));
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer width="100%" height={170}>
       <BarChart data={data}>
         <XAxis dataKey="name" />
         <YAxis />

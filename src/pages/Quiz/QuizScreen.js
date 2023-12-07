@@ -3,6 +3,9 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./QuizScreen.css";
 import ChattingScreen from "../../components/ChatBot/ChattingScreen";
+import { calculateStatistics } from "../../utils/Statistics";
+import GenrePreferenceChart from "../../components/GenrePreferenceChart";
+import { genreIdToName } from "../Survey/SurveyScreen";
 
 const API_KEY = "737fc88d439055fbc420c49a2612c2dd";
 const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=ko-KR`;
@@ -42,6 +45,25 @@ const Ranking = () => {
           </li>
         ))}
       </ul>
+    </div>
+  );
+};
+
+const ResultsPage = () => {
+  const preferences =
+    JSON.parse(localStorage.getItem("genrePreferences")) || {};
+  const statistics = calculateStatistics(preferences, genreIdToName);
+
+  return (
+    <div id="resultContainer">
+      <p>
+        가장 선호하는 장르 :{" "}
+        <strong>{statistics.mostPreferredGenres.join(", ")}</strong>
+      </p>
+      <GenrePreferenceChart
+        preferences={preferences}
+        genreIdToName={genreIdToName}
+      />
     </div>
   );
 };
@@ -207,6 +229,7 @@ const QuizScreen = () => {
           </div>
         </div>
       )}
+      <ResultsPage />
       <button id="restartButton" onClick={resetGame}>
         퀴즈 재시작
       </button>
@@ -214,7 +237,7 @@ const QuizScreen = () => {
         Chat Bot
       </button>
       <button id="surveyButton" onClick={handleSurveyClick}>
-        설문조사
+        선호도 조사
       </button>
       <div>
         {showChatbot && (
