@@ -5,6 +5,7 @@ import QuizScreen from "./pages/Quiz/QuizScreen";
 import GenreSurvey from "./pages/Survey/SurveyScreen";
 import ChattingScreen from "./components/ChatBot/ChattingScreen";
 import TypeScreen from "./pages/QuizType/TypeScreen";
+import ResultsPage from "./pages/Survey/ResultsPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/survey" element={<GenreSurvey />} />
         <Route path="/type" element={<TypeScreen />} />
         <Route path="/chatting" element={<ChattingScreen />} />
+        <Route path="/results" element={<ResultsPage />} />
       </Routes>
     </Router>
   );

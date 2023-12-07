@@ -1,0 +1,12 @@
+.genre-container {
+  margin-bottom: 20px;
+}
+
+.movie-image {
+  width: 100px;
+  height: 150px;
+}
+
+.preference-label {
+  margin-left: 10px;
+}
