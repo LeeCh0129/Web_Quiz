@@ -19,7 +19,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-basis: 33.33%; /* 테이블 내 각 셀이 전체 너비의 1/3을 차지하도록 설정 */
+  flex-basis: 33.33%;
   height: 100%;
 }
 
@@ -35,7 +35,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  width: 100%; /* 각 td의 너비를 100%로 설정하여 전체 셀을 채우도록 함 */
+  width: 100%;
 }
 
 #minuk {
