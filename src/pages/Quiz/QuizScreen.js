@@ -29,7 +29,6 @@ const Ranking = () => {
     .sort((a, b) => b - a)
     .slice(0, 10);
 
-  // 순위 부여
   const rankedScores = scores.map((score, index) => {
     const rank = index + 1;
     return { rank, score };
@@ -89,7 +88,6 @@ const QuizScreen = () => {
       .then((response) => {
         const data = response.data;
         const movies = data.results;
-        // overview가 있는 영화만 필터링
         const moviesWithOverview = movies.filter(
           (movie) => movie.overview && movie.overview.trim()
         );
@@ -98,9 +96,9 @@ const QuizScreen = () => {
         if (typeId === "releaseDate") {
           fetchedQuestions = movies.map((movie, index) => {
             const options = shuffleArray(movies.map((m) => m.release_date))
-              .filter((opt) => opt !== movie.release_date) // 현재 영화의 개봉일 제외
+              .filter((opt) => opt !== movie.release_date)
               .slice(0, 3);
-            options.push(movie.release_date); // 정답 추가ase_date); // 정답 추가
+            options.push(movie.release_date);
 
             return {
               id: index,

@@ -41,7 +41,6 @@ const SurveyScreen = () => {
       .catch((error) => console.error("API 연결 에러:", error));
   }, []);
 
-  // 영화 장르 선호도 초기값 설정
   const initializeGenrePreferences = (movies) => {
     const initialPreferences = {};
     movies.forEach((movie) => {

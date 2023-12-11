@@ -47,7 +47,7 @@ const ChattingScreen = ({ show, handleClose }) => {
     const apiUrl = "https://api.openai.com/v1/chat/completions";
     const headers = {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`, // 환경 변수로부터 API 키 사용
+      Authorization: `Bearer ${apiKey}`,
     };
 
     const data = {
@@ -70,12 +70,12 @@ const ChattingScreen = ({ show, handleClose }) => {
       return response.data.choices[0].message.content;
     } catch (error) {
       console.error(
-        "Error in API request:",
+        "API 요청 오류:",
         error.response ? error.response.data : error
       );
       return error.response
         ? error.response.data.error.message
-        : "Error in fetching response.";
+        : "응답을 가져오는중에 오류 발생";
     }
   };
 
