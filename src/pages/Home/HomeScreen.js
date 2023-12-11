@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import Board from "../../components/Board";
 import Member from "../../components/Member";
-import ChattingScreen from "../../components/ChatBot/ChattingScreen";
-import { useNavigate } from "react-router-dom";
 import "./Styles.css";
+
 function HomeScreen() {
-  const navigate = useNavigate();
   const [boardText, setBoardText] = useState("팀 세얼간이");
-  const [showChatbot, setShowChatbot] = useState(false);
 
   const showText = (introduce, name, source) => {
     setBoardText(introduce);

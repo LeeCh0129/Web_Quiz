@@ -12,8 +12,10 @@ const ChattingScreen = ({ show, handleClose }) => {
     },
   ]);
 
+  // 모달창 바깥을 클릭하면 모달창이 닫히도록 하는 코드
   const modalRef = useRef();
 
+  // useEffect 훅으로 모달 바깥 클릭 이벤트 관리
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -30,10 +32,13 @@ const ChattingScreen = ({ show, handleClose }) => {
   if (!show) {
     return null;
   }
+
+  // 입력값이 바뀔 때마다 setUserInput을 통해 상태를 업데이트
   const handleInputChange = (e) => {
     setUserInput(e.target.value);
   };
 
+  // 채팅 양식 제출 처리
   const handleSubmit = async (e) => {
     e.preventDefault();
     addMessageToChatHistory(userInput, "User");
@@ -42,6 +47,7 @@ const ChattingScreen = ({ show, handleClose }) => {
     setUserInput("");
   };
 
+  // OpenAI API를 사용하여 봇의 응답을 가져오는 함수
   const getBotResponse = async (input) => {
     const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
     const apiUrl = "https://api.openai.com/v1/chat/completions";
@@ -65,6 +71,7 @@ const ChattingScreen = ({ show, handleClose }) => {
       ],
     };
 
+    //api 요청 받아와서 오류 처리하기
     try {
       const response = await axios.post(apiUrl, data, { headers });
       return response.data.choices[0].message.content;
@@ -79,6 +86,7 @@ const ChattingScreen = ({ show, handleClose }) => {
     }
   };
 
+  // 채팅 내역에 메시지를 추가하는 함수
   const addMessageToChatHistory = (message, sender) => {
     const formattedMessage = `${
       sender === "User" ? "User : " : "Chat Bot : "

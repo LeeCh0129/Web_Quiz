@@ -11,19 +11,25 @@ const API_KEY = "737fc88d439055fbc420c49a2612c2dd";
 const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=ko-KR`;
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
+// 로컬 스토리지에 퀴즈 풀이 누적 점수 저장
 const saveScore = (newScore) => {
   const scores = JSON.parse(localStorage.getItem("scores")) || [];
   scores.push(newScore);
   localStorage.setItem("scores", JSON.stringify(scores));
 };
-const shortenOverview = (overview, maxLength = 100) => {
-  if (overview.length <= maxLength) return overview;
-  return `${overview.substring(0, maxLength)}....`;
-};
+
+// 로컬 스토리지에 저장한 퀴즈 풀이 누적 점수 조회
 const getScores = () => {
   return JSON.parse(localStorage.getItem("scores")) || [];
 };
 
+// 정답 예시 길이 제한
+const shortenOverview = (overview, maxLength = 100) => {
+  if (overview.length <= maxLength) return overview;
+  return `${overview.substring(0, maxLength)}....`;
+};
+
+// 랭킹 출력 컴포넌트
 const Ranking = () => {
   const scores = getScores()
     .sort((a, b) => b - a)
@@ -48,6 +54,7 @@ const Ranking = () => {
   );
 };
 
+// 선호도 조사 결과 차트
 const ResultsPage = () => {
   const preferences =
     JSON.parse(localStorage.getItem("genrePreferences")) || {};
@@ -67,6 +74,7 @@ const ResultsPage = () => {
   );
 };
 
+// 영화 퀴즈 풀이 페이지
 const QuizScreen = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -78,10 +86,37 @@ const QuizScreen = () => {
   const data = { ...location.state };
   const typeId = data.quizType;
 
+  // TypeScreen에서 넘어온 props 값 검사
+  const quizType = typeId === "releaseDate" ? "개봉일" : "줄거리";
+
+  // 퀴즈 재시작
+  const resetGame = () => {
+    setScore(0);
+    setCurrentQuestionIndex(0);
+    fetchQuizQuestions();
+  };
+
+  // Chat Bot 기능 실행
+  const handleChattingScreen = () => {
+    setShowChatbot(true);
+  };
+
+  // Chat Bot 기능 종료
+  const closeChatbot = () => {
+    setShowChatbot(false);
+  };
+
+  // 선호도 조사 페이지로 이동
+  const handleSurveyClick = () => {
+    navigate("/survey");
+  };
+
+  // 초기 렌더링 시 알맞은 유형의 퀴즈 출력
   useEffect(() => {
     fetchQuizQuestions();
   }, []);
 
+  // 알맞은 유형의 퀴즈 출력 로직
   const fetchQuizQuestions = async () => {
     await axios
       .get(API_URL)
@@ -143,6 +178,8 @@ const QuizScreen = () => {
         console.error("API 호출 중 오류 발생:", error);
       });
   };
+
+  // 퀴즈 순서 랜덤으로 섞기
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -150,6 +187,8 @@ const QuizScreen = () => {
     }
     return array;
   };
+
+  // 사용자가 선택한 정답 확인 및 점수 누적 (틀릴 경우 alert 창으로 알림)
   const handleAnswer = (selectedOption) => {
     if (selectedOption === quizQuestions[currentQuestionIndex].answer) {
       setScore(score + 1);
@@ -170,28 +209,6 @@ const QuizScreen = () => {
       resetGame();
     }
   };
-  useEffect(() => {
-    fetchQuizQuestions();
-  }, []);
-  const resetGame = () => {
-    setScore(0);
-    setCurrentQuestionIndex(0);
-    fetchQuizQuestions();
-  };
-
-  const handleChattingScreen = () => {
-    setShowChatbot(true);
-  };
-
-  const closeChatbot = () => {
-    setShowChatbot(false);
-  };
-
-  const handleSurveyClick = () => {
-    navigate("/survey");
-  };
-
-  const quizType = typeId === "releaseDate" ? "개봉일" : "줄거리";
 
   return (
     <div id="wrapper">
