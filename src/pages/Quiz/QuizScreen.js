@@ -83,8 +83,8 @@ const QuizScreen = () => {
     fetchQuizQuestions();
   }, []);
 
-  const fetchQuizQuestions = () => {
-    axios
+  const fetchQuizQuestions = async () => {
+    await axios
       .get(API_URL)
       .then((response) => {
         const data = response.data;
